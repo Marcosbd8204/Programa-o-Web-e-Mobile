@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Login - INSEGURO</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .aviso {
+            background: #fff3cd;
+            border-left: 4px solid #ff9800;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 5px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .aviso strong {
+            display: block;
+            margin-bottom: 8px;
+            color: #856404;
+        }
+
+        h1 {
+            color: #dc3545;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #764ba2;
+        }
+
+        .credenciais {
+            background: #e7f3ff;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            font-size: 13px;
+        }
+
+        .credenciais strong {
+            display: block;
+            margin-bottom: 8px;
+            color: #0d47a1;
+        }
+
+        .resultado {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .resultado.sucesso {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            color: #155724;
+        }
+
+        .resultado.erro {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            color: #721c24;
+        }
+
+        .dados-secretos {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+            border-left: 4px solid #ffc107;
+        }
+
+        .instrucoes {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 25px;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .instrucoes h3 {
+            color: #dc3545;
+            margin-bottom: 15px;
+        }
+
+        .instrucoes ol {
+            margin-left: 20px;
+        }
+
+        .instrucoes li {
+            margin-bottom: 10px;
+        }
+
+        code {
+            background: #2C3E50;
+            color: #ECF0F1;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="aviso">
+            <strong>⚠️ ATENÇÃO - Exemplo INSEGURO!</strong>
+            Este código armazena senhas diretamente no JavaScript.<br>
+            Qualquer pessoa pode ver as senhas abrindo o código-fonte!
+        </div>
+
+        <h1>🔓 Login Inseguro</h1>
+        <p class="subtitle">Tudo validado no cliente (navegador)</p>
+
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="usuario">Usuário:</label>
+                <input type="text" id="usuario" placeholder="Digite o usuário" required>
+            </div>
+
+            <div class="form-group">
+                <label for="senha">Senha:</label>
+                <input type="password" id="senha" placeholder="Digite a senha" required>
+            </div>
+
+            <button type="submit">Entrar</button>
+        </form>
+
+        <div class="credenciais">
+            <strong>📋 Credenciais de teste:</strong>
+            • admin / admin123<br>
+            • joao / senha456<br>
+            • maria / maria789
+        </div>
+
+        <div id="resultado" class="resultado"></div>
+
+        <div class="instrucoes">
+            <h3>🔍 Como ver que é INSEGURO:</h3>
+            <ol>
+                <li>Pressione <code>Ctrl+U</code> (ou botão direito → "Ver código-fonte")</li>
+                <li>Role até o final e veja a tag <code>&lt;script&gt;</code></li>
+                <li>Veja as senhas expostas no código!</li>
+                <li>Ou pressione <code>F12</code> → aba "Sources" → veja o arquivo</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        // ❌ PÉSSIMA PRÁTICA - NUNCA FAÇA ISSO!
+        // Senhas armazenadas diretamente no código JavaScript
+        // Qualquer pessoa pode ver isso abrindo o código-fonte (Ctrl+U)
+        
+        const usuariosValidos = {
+            'admin': {
+                senha: 'admin123',
+                nome: 'Administrador',
+                cargo: 'CEO',
+                salario: 25000,
+                email: 'admin@empresa.com'
+            },
+            'joao': {
+                senha: 'senha456',
+                nome: 'João Silva',
+                cargo: 'Desenvolvedor',
+                salario: 8000,
+                email: 'joao@empresa.com'
+            },
+            'maria': {
+                senha: 'maria789',
+                nome: 'Maria Santos',
+                cargo: 'Designer',
+                salario: 7000,
+                email: 'maria@empresa.com'
+            }
+        };
+
+        // Formulário
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const usuario = document.getElementById('usuario').value.trim();
+            const senha = document.getElementById('senha').value;
+            const divResultado = document.getElementById('resultado');
+            
+            // ❌ VALIDAÇÃO NO CLIENTE - TOTALMENTE INSEGURA!
+            if (usuariosValidos[usuario] && usuariosValidos[usuario].senha === senha) {
+                // Login bem-sucedido
+                const dados = usuariosValidos[usuario];
+                
+                divResultado.className = 'resultado sucesso';
+                divResultado.innerHTML = `
+                    <strong>✅ Login realizado com sucesso!</strong><br><br>
+                    <strong>Bem-vindo(a), ${dados.nome}!</strong><br><br>
+                    <div class="dados-secretos">
+                        <strong>📊 Dados "Secretos" (que não deveriam estar no cliente):</strong><br>
+                        • Cargo: ${dados.cargo}<br>
+                        • Salário: R$ ${dados.salario.toLocaleString('pt-BR')}<br>
+                        • Email: ${dados.email}<br><br>
+                        <em>⚠️ Estes dados estão EXPOSTOS no código JavaScript!</em>
+                    </div>
+                `;
+                divResultado.style.display = 'block';
+                
+            } else {
+                // Login falhou
+                divResultado.className = 'resultado erro';
+                divResultado.innerHTML = '<strong>❌ Usuário ou senha inválidos!</strong>';
+                divResultado.style.display = 'block';
+            }
+        });
+
+        // ❌ Até isso fica exposto!
+        console.log('🔓 VULNERABILIDADE: Senhas armazenadas no código:');
+        console.log(usuariosValidos);
+        console.log('');
+        console.log('💡 Abra o código-fonte (Ctrl+U) e veja você mesmo!');
+    </script>
+</body>
+</html>
