@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Configurando o Ambiente React Native</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --surface2: #21262d;
+      --border: #30363d;
+      --accent: #58a6ff;
+      --accent2: #3fb950;
+      --accent3: #f78166;
+      --accent4: #e3b341;
+      --text: #e6edf3;
+      --text-muted: #8b949e;
+      --code-bg: #0d1117;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Sora', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding: 2rem 1rem;
+    }
+
+    .page {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    /* HEADER */
+    header {
+      text-align: center;
+      padding: 3rem 0 4rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 3rem;
+      position: relative;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 200px; height: 3px;
+      background: linear-gradient(90deg, var(--accent4), var(--accent3));
+      border-radius: 0 0 4px 4px;
+    }
+
+    .tag-label {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent4);
+      background: rgba(227, 179, 65, 0.1);
+      border: 1px solid rgba(227, 179, 65, 0.3);
+      padding: 0.2rem 0.8rem;
+      border-radius: 999px;
+      margin-bottom: 1.2rem;
+      letter-spacing: 0.08em;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    h1 span { color: var(--accent4); }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 1rem;
+      font-weight: 300;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    /* AVISO EXPO */
+    .expo-banner {
+      background: rgba(227, 179, 65, 0.07);
+      border: 1px solid rgba(227, 179, 65, 0.3);
+      border-left: 3px solid var(--accent4);
+      border-radius: 0 8px 8px 0;
+      padding: 1rem 1.5rem;
+      margin-bottom: 3rem;
+      font-size: 0.92rem;
+      color: #c9d1d9;
+    }
+
+    .expo-banner strong { color: var(--accent4); }
+
+    /* SECTION HEADERS */
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .section-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.9rem;
+      border-radius: 4px;
+    }
+
+    .badge-blue  { background: rgba(88,166,255,0.15); color: var(--accent);  border: 1px solid rgba(88,166,255,0.3); }
+    .badge-green { background: rgba(63,185,80,0.15);  color: var(--accent2); border: 1px solid rgba(63,185,80,0.3); }
+    .badge-orange{ background: rgba(247,129,102,0.15);color: var(--accent3); border: 1px solid rgba(247,129,102,0.3); }
+
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .section-label {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    /* STEP CARD */
+    .step-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem 1.8rem;
+      margin-bottom: 1.2rem;
+      transition: border-color 0.2s;
+    }
+
+    .step-card:hover { border-color: rgba(227,179,65,0.35); }
+
+    .step-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .step-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 700;
+      min-width: 2rem;
+      height: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    .num-blue   { background: rgba(88,166,255,0.15); color: var(--accent);  border: 1px solid rgba(88,166,255,0.3); }
+    .num-green  { background: rgba(63,185,80,0.15);  color: var(--accent2); border: 1px solid rgba(63,185,80,0.3); }
+    .num-orange { background: rgba(247,129,102,0.15);color: var(--accent3); border: 1px solid rgba(247,129,102,0.3); }
+
+    .step-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .step-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 400;
+      margin-top: 0.15rem;
+    }
+
+    .step-body {
+      color: #c9d1d9;
+      font-size: 0.92rem;
+      margin-bottom: 1rem;
+      padding-left: 3rem;
+    }
+
+    .step-body code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+      color: var(--accent4);
+    }
+
+    /* CODE BLOCK */
+    .code-block {
+      margin-left: 3rem;
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 0.5rem;
+    }
+
+    .code-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 1rem;
+      background: var(--surface2);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .code-lang {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .code-dots { display: flex; gap: 0.4rem; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dot-r { background: #f78166; }
+    .dot-y { background: #e3b341; }
+    .dot-g { background: #3fb950; }
+
+    pre { padding: 1rem 1.2rem; overflow-x: auto; }
+
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      line-height: 1.7;
+      color: #e6edf3;
+    }
+
+    .kw   { color: #ff7b72; }
+    .fn   { color: #d2a8ff; }
+    .str  { color: #a5d6ff; }
+    .cm   { color: #6e7681; font-style: italic; }
+    .tag-c{ color: #7ee787; }
+    .imp  { color: #e3b341; }
+    .attr { color: #79c0ff; }
+
+    /* FILE TREE */
+    .file-tree {
+      margin-left: 3rem;
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .folder    { color: var(--accent); }
+    .file-jsx  { color: #f78166; }
+    .file-json { color: var(--accent2); }
+    .file-ts   { color: #79c0ff; }
+    .file-comment { color: var(--text-muted); font-style: italic; }
+
+    /* EXT GRID */
+    .ext-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0.8rem;
+      margin-left: 3rem;
+    }
+
+    .ext-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.8rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .ext-icon { font-size: 1.3rem; }
+    .ext-name { font-size: 0.85rem; font-weight: 600; }
+    .ext-desc { font-size: 0.72rem; color: var(--text-muted); }
+
+    /* COMPARAÇÃO */
+    .compare-table {
+      margin-left: 3rem;
+      width: calc(100% - 3rem);
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+
+    .compare-table th {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.6rem 1rem;
+      text-align: left;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+
+    .compare-table td {
+      padding: 0.6rem 1rem;
+      border: 1px solid var(--border);
+      color: #c9d1d9;
+      background: var(--code-bg);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+    }
+
+    .compare-table tr:hover td { background: var(--surface2); }
+
+    /* TIP / IMPORTANTE */
+    .tip-box {
+      background: rgba(247, 129, 102, 0.06);
+      border: 1px solid rgba(247, 129, 102, 0.25);
+      border-left: 3px solid var(--accent3);
+      border-radius: 0 8px 8px 0;
+      padding: 1.2rem 1.5rem;
+      margin: 2.5rem 0;
+    }
+
+    .tip-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--accent3);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+
+    .tip-box p {
+      font-size: 0.92rem;
+      color: #c9d1d9;
+      margin-bottom: 0.8rem;
+    }
+
+    .tip-box p:last-child { margin-bottom: 0; }
+    .tip-box strong { color: var(--text); }
+    .tip-box code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+      color: var(--accent3);
+    }
+
+    /* SECTION SPACER */
+    .section-block { margin-bottom: 3.5rem; }
+
+    /* FOOTER */
+    footer {
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .footer-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <header>
+    <div class="tag-label">&#x2022; Guia de Aula</div>
+    <h1>Configurando o Ambiente <span>React Native</span></h1>
+    <p class="subtitle">Um guia sequencial e didático para configurar o ambiente com Expo e criar o primeiro app mobile com Hello World.</p>
+  </header>
+
+  <!-- AVISO EXPO -->
+  <div class="expo-banner">
+    🚀 Este guia usa o <strong>Expo</strong> — uma ferramenta que simplifica muito a configuração do React Native. Com ela, você não precisa instalar Android Studio nem Xcode para ver o app funcionando. Basta usar o celular!
+  </div>
+
+  <!-- PARTE 1 -->
+  <div class="section-block">
+    <div class="section-title">
+      <span class="section-badge badge-blue">Parte 1</span>
+      <span class="section-label">Preparando o Computador</span>
+      <div class="section-line"></div>
+    </div>
+
+    <!-- PASSO 1 -->
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-number num-blue">01</div>
+        <div>
+          <div class="step-title">Instalar o Node.js</div>
+          <div class="step-subtitle">Requisito fundamental — igual ao React Web</div>
+        </div>
+      </div>
+      <p class="step-body">
+        Acesse <strong>nodejs.org</strong> e baixe a versão <strong>LTS</strong>. Se você já instalou para usar o React Web, pode pular este passo. Confirme no terminal:
+      </p>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">terminal</span>
+          <div class="code-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+        </div>
+        <pre><code>node -v
+npm -v</code></pre>
+      </div>
+    </div>
+
+    <!-- PASSO 2 -->
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-number num-blue">02</div>
+        <div>
+          <div class="step-title">Instalar o Visual Studio Code</div>
+          <div class="step-subtitle">Mesmo editor usado no React Web</div>
+        </div>
+      </div>
+      <p class="step-body">
+        Se você já tem o VSCode instalado do guia anterior, apenas adicione a extensão abaixo. Ela adiciona suporte a componentes React Native e autocomplete de componentes como <code>&lt;View&gt;</code> e <code>&lt;Text&gt;</code>.
+      </p>
+      <div class="ext-grid">
+        <div class="ext-card">
+          <span class="ext-icon">📱</span>
+          <div>
+            <div class="ext-name">React Native Tools</div>
+            <div class="ext-desc">Suporte oficial da Microsoft para RN</div>
+          </div>
+        </div>
+        <div class="ext-card">
+          <span class="ext-icon">⚡</span>
+          <div>
+            <div class="ext-name">ES7+ React Snippets</div>
+            <div class="ext-desc">Já instalado no guia anterior</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASSO 3 -->
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-number num-blue">03</div>
+        <div>
+          <div class="step-title">Instalar o app Expo Go no celular</div>
+          <div class="step-subtitle">É com ele que você vai visualizar o app em tempo real</div>
+        </div>
+      </div>
+      <p class="step-body">
+        No celular (Android ou iPhone), baixe o app <strong>Expo Go</strong> diretamente na loja de aplicativos. É gratuito. Ele permite visualizar o seu app em desenvolvimento sem precisar gerar um arquivo instalável.
+      </p>
+    </div>
+  </div>
+
+  <!-- PARTE 2 -->
+  <div class="section-block">
+    <div class="section-title">
+      <span class="section-badge badge-green">Parte 2</span>
+      <span class="section-label">Criando o Primeiro Projeto</span>
+      <div class="section-line"></div>
+    </div>
+
+    <!-- PASSO 4 -->
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-number num-green">04</div>
+        <div>
+          <div class="step-title">Criar o projeto com Expo</div>
+          <div class="step-subtitle">Comando que gera toda a estrutura do app</div>
+        </div>
+      </div>
+      <p class="step-body">
+        No terminal, execute o comando abaixo. Quando perguntado sobre o template, escolha <strong>Blank</strong> (o mais simples):
+      </p>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">terminal</span>
+          <div class="code-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+        </div>
+        <pre><code>npx create-expo-app meu-primeiro-rn --template blank</code></pre>
+      </div>
+    </div>
+
+    <!-- PASSO 5 -->
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-number num-green">05</div>
+        <div>
+          <div class="step-title">Entrar na pasta do projeto</div>
+          <div class="step-subtitle">Navegar até o diretório criado</div>
+        </div>
+      </div>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">terminal</span>
+          <div class="code-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+        </div>
+        <pre><code>cd meu-primeiro-rn</code></pre>
+      </div>
+    </div>
+
+    <!-- PASSO 6 -->
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-number num-green">06</div>
+        <div>
+          <div class="step-title">Abrir no VSCode</div>
+          <div class="step-subtitle">Abrir a pasta do projeto no editor</div>
+        </div>
+      </div>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">terminal</span>
+          <div class="code-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+        </div>
+        <pre><code>code .</code></pre>
+      </div>
+    </div>
+
+    <!-- PASSO 7 -->
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-number num-green">07</div>
+        <div>
+          <div class="step-title">Entender a estrutura de pastas</div>
+          <div class="step-subtitle">Conhecer os arquivos principais do projeto</div>
+        </div>
+      </div>
+      <p class="step-body">
+        A estrutura do Expo é mais simples que a do React Web. O arquivo principal é o <code>App.js</code>, na raiz do projeto:
+      </p>
+      <div class="file-tree">
+        <div class="code-bar">
+          <span class="code-lang">estrutura do projeto</span>
+          <div class="code-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+        </div>
+        <pre><code><span class="folder">meu-primeiro-rn/</span>
+├── <span class="file-jsx">App.js</span>            <span class="file-comment">← componente principal (aqui você vai trabalhar)</span>
+├── <span class="file-json">package.json</span>      <span class="file-comment">← configurações e dependências</span>
+├── <span class="file-json">app.json</span>          <span class="file-comment">← configurações do app (nome, ícone, etc.)</span>
+└── <span class="folder">assets/</span>           <span class="file-comment">← imagens e fontes do app</span></code></pre>
+      </div>
+    </div>
+
+    <!-- PASSO 8 -->
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-number num-green">08</div>
+        <div>
+          <div class="step-title">Escrever o Hello, World!</div>
+          <div class="step-subtitle">Editar o componente principal — App.js</div>
+        </div>
+      </div>
+      <p class="step-body">
+        Abra o arquivo <code>App.js</code> e <strong>substitua todo o conteúdo</strong> pelo código abaixo. Perceba que no lugar de <code>&lt;div&gt;</code> usamos <code>&lt;View&gt;</code> e no lugar de <code>&lt;h1&gt;</code> usamos <code>&lt;Text&gt;</code>:
+      </p>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">App.js</span>
+          <div class="code-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+        </div>
+        <pre><code><span class="imp">import</span> { View, Text } <span class="imp">from</span> <span class="str">'react-native'</span>
+
+<span class="kw">function</span> <span class="fn">App</span>() {
+  <span class="kw">return</span> (
+    <span class="tag-c">&lt;View&gt;</span>
+      <span class="tag-c">&lt;Text&gt;</span>Hello, World!<span class="tag-c">&lt;/Text&gt;</span>
+    <span class="tag-c">&lt;/View&gt;</span>
+  )
+}
+
+<span class="kw">export default</span> App</code></pre>
+      </div>
+    </div>
+
+    <!-- PASSO 9 -->
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-number num-green">09</div>
+        <div>
+          <div class="step-title">Rodar o servidor do Expo</div>
+          <div class="step-subtitle">Iniciar o projeto e gerar o QR Code</div>
+        </div>
+      </div>
+      <p class="step-body">
+        Execute o comando abaixo. Um <strong>QR Code</strong> vai aparecer no terminal ou no navegador. Escaneie com o celular usando o app <strong>Expo Go</strong> e o app será aberto diretamente no seu dispositivo!
+      </p>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">terminal</span>
+          <div class="code-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+        </div>
+        <pre><code>npx expo start</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- PARTE 3 -->
+  <div class="section-block">
+    <div class="section-title">
+      <span class="section-badge badge-orange">Parte 3</span>
+      <span class="section-label">React Web vs React Native</span>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-number num-orange">📋</div>
+        <div>
+          <div class="step-title">Comparação das tags equivalentes</div>
+          <div class="step-subtitle">O que muda na prática entre os dois</div>
+        </div>
+      </div>
+      <p class="step-body">
+        A lógica e os conceitos são os mesmos. O que muda é o vocabulário das tags:
+      </p>
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>React Web</th>
+            <th>React Native</th>
+            <th>Função</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>&lt;div&gt;</td><td>&lt;View&gt;</td><td>Contêiner / agrupador</td></tr>
+          <tr><td>&lt;h1&gt;, &lt;p&gt;, &lt;span&gt;</td><td>&lt;Text&gt;</td><td>Todo texto visível</td></tr>
+          <tr><td>&lt;img&gt;</td><td>&lt;Image&gt;</td><td>Exibir imagens</td></tr>
+          <tr><td>&lt;input&gt;</td><td>&lt;TextInput&gt;</td><td>Campo de texto</td></tr>
+          <tr><td>&lt;button&gt;</td><td>&lt;TouchableOpacity&gt;</td><td>Botão clicável</td></tr>
+          <tr><td>&lt;ul&gt; / &lt;li&gt;</td><td>&lt;FlatList&gt;</td><td>Listas de itens</td></tr>
+          <tr><td>CSS normal</td><td>StyleSheet.create({})</td><td>Estilização</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- IMPORTANTE -->
+  <div class="tip-box">
+    <div class="tip-label">⚠️ Importante!</div>
+    <p>
+      Agora que o seu Hello World está funcionando no celular, observe que o código usa os mesmos conceitos que você já aprendeu no React Web.
+    </p>
+    <p>
+      🔹 <strong>View</strong> — É o equivalente à <code>&lt;div&gt;</code> do HTML. Serve como contêiner para organizar os elementos na tela. Todo conteúdo visível precisa estar dentro de uma <code>&lt;View&gt;</code>.
+    </p>
+    <p>
+      🔹 <strong>Text</strong> — No React Native, <strong>todo texto visível</strong> precisa estar dentro de um componente <code>&lt;Text&gt;</code>. Ao contrário do HTML, você não pode simplesmente escrever texto solto dentro de uma <code>&lt;View&gt;</code>.
+    </p>
+    <p>
+      🔹 <strong>import</strong> — Diferente do React Web onde as tags HTML já estão disponíveis, no React Native você precisa <strong>importar explicitamente</strong> cada componente que vai usar, como <code>View</code> e <code>Text</code>, diretamente da biblioteca <code>'react-native'</code>.
+    </p>
+  </div>
+
+  <footer>
+    <p class="footer-text">Guia básico &mdash; Configuração de Ambiente React Native com Expo</p>
+  </footer>
+
+</div>
+</body>
+</html>
