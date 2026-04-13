@@ -15,13 +15,26 @@
     --cor-branco: #ffffff;
 }
 
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1; /* empurra o footer pra baixo */
+}
+
 /* HEADER */
 header {
     background: linear-gradient(90deg, #5ac474, #1dad0f9a);
     color: white;
-    height: 230px;
+    height: 180px;
     position: relative;
-    padding: 20px;
+    padding: 15px;
 }
 
 /* NOME (ESQUERDA SUPERIOR) */
@@ -38,8 +51,8 @@ header img {
     top: 20px;
     left: 50%;
     transform: translateX(-50%);
-    width: 110px;
-    height: 110px;
+    width: 90px;
+    height: 90px;
     border-radius: 50%;
     border: 3px solid white;
     object-fit: cover;
@@ -47,18 +60,13 @@ header img {
 
 /* BOTÃO TEMA (CENTRO INFERIOR) */
 #temaBtn {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 8px 15px;
-    border: none;
-    border-radius: 5px;
-    background: white;
-    color: black;
-    cursor: pointer;
-    font-weight: bold;
-    transition: 0.3s;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #temaBtn:hover {
@@ -73,15 +81,19 @@ nav {
 }
 
 nav a {
-    text-decoration: none;
-    color: white;
-    margin-right: 10px;
-    font-weight: bold;
-    transition: 0.3s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    margin-left: 8px;
+    font-size: 14px;
 }
 
 nav a:hover {
-    opacity: 0.7;
+    background: rgba(255,255,255,0.4);
 }
 
 /* 🌙 TEMA ESCURO */
@@ -99,9 +111,25 @@ nav a:hover {
     color: white;
 }
 
-body {
-    background-color: var(--cor-fundo);
-    color: var(--cor-texto);
+main h1, main p {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: aparecer 1s ease forwards;
+}
+
+main h1 {
+    animation-delay: 0.2s;
+}
+
+main p {
+    animation-delay: 0.6s;
+}
+
+@keyframes aparecer {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* FOOTER */
@@ -133,6 +161,19 @@ footer {
 /* TEMA ESCURO */
 .dark footer {
     background: #111;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 900px;
+    margin: auto;
+}
+
+/* deixa tudo na mesma linha */
+.footer-container p {
+    margin: 0;
 }
 
 /* RESPONSIVO */
