@@ -206,7 +206,7 @@ button:hover {
 }
 .projeto.dark {
     background: rgb(22, 21, 21);
-    color: white;
+    color: rgb(7, 7, 7);
     padding: 15px;
     margin-bottom: 15px;
     border-radius: 12px;
