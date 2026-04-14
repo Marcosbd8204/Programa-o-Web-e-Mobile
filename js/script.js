@@ -1,18 +1,15 @@
+// BOTÃO TEMA
 const botaoTema = document.getElementById("temaBtn");
-
 botaoTema.addEventListener("click", () => {
     document.body.classList.toggle("dark");
-
-    // Troca o ícone
     if (document.body.classList.contains("dark")) {
-        botaoTema.textContent = "☀️ Claro";
+        botaoTema.textContent = "☀️";
     } else {
-        botaoTema.textContent = "🌙 Escuro";
+        botaoTema.textContent = "🌙";
     }
 });
-
-// ANO AUTOMÁTICO
+// Parte responsavel por deixar o ano altomatico no rodapé
 const ano = document.getElementById("ano");
-const anoAtual = new Date().getFullYear();
-
-ano.textContent = `© ${anoAtual}`;  
+if (ano) {
+    ano.textContent = new Date().getFullYear();
+}
